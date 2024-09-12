@@ -4,13 +4,13 @@ subtitle: "Environmental Data Analytics"
 author: "Luana Lima"
 date: "Fall 2024"
 output: pdf_document
----
+---  
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Data frame definition
+## Data frame definition 
 
 A **data frame** is used for storing data tables. It a list a vector of equal length.
 
@@ -103,8 +103,8 @@ create_df
 Some useful functions to use with data frames.
 
 ```{r}
-ncol(df)  
-nrow(df)  
+ncol(df)  # Number of columns 
+nrow(df)  # number of rows 
 length(df)  #same as ncol
 summary(df)
 head(df) #show the first 6 rows of df
