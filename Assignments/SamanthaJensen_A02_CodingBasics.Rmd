@@ -37,10 +37,16 @@ seq1
 #2. Calculating the mean and median of seq1
 mean(seq1)
 median(seq1)
-#3. Comparing the mean and the median of the sequence of numbers. Since the values of the mean and median are the same, both statements return FALSE.  
-mean(seq1) > median(seq1)
-mean(seq1) < median(seq1)
-mean(seq1) == median(seq1)
+#3. Stacked if statements to compare the mean and median of the vector sequence.  
+compare <- function() { if (mean(seq1) < median(seq1)) {
+  print("Median is greater.")
+} else if (mean(seq1) > median(seq1)) {
+  print("Mean is greater.")
+} else {
+  print("They are equal")
+}
+  }
+compare()
 ```
 
 ## Basics, Part 2
