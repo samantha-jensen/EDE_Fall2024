@@ -71,6 +71,7 @@ view(Litter)
 The Dataset Neonics has 4623 rows and 30 columns. 
 
 ```{r}
+# checking the dimensions of th Neonics dataset
 dim(Neonics)
 
 ```
@@ -78,6 +79,7 @@ dim(Neonics)
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest? [Tip: The `sort()` command is useful for listing the values in order of magnitude...]
 
 ```{r}
+# Sorting the summary of the effects column 
 sort(summary(Neonics$Effect))
 
 
@@ -89,6 +91,7 @@ sort(summary(Neonics$Effect))
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: Explore the help on the `summary()` function, in particular the `maxsum` argument...]
 
 ```{r}
+#sorting the summary of the species.common.name column 
 sort(summary(Neonics$Species.Common.Name))
 
 
@@ -99,6 +102,7 @@ sort(summary(Neonics$Species.Common.Name))
 8.  Concentrations are always a numeric value. What is the class of `Conc.1..Author.` column in the dataset, and why is it not numeric? [Tip: Viewing the dataframe may be helpful...]
 
 ```{r}
+# checking the class of the Conc.1..Author column 
 class(Neonics$Conc.1..Author.)
 
 ```
