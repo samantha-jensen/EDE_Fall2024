@@ -32,7 +32,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 1.  Load necessary packages (tidyverse, lubridate, here), check your current working directory and upload two datasets: the ECOTOX neonicotinoid dataset (ECOTOX_Neonicotinoids_Insects_raw.csv) and the Niwot Ridge NEON dataset for litter and woody debris (NEON_NIWO_Litter_massdata_2018-08_raw.csv). Name these datasets "Neonics" and "Litter", respectively. Be sure to include the subcommand to read strings in as factors.
 
-```{r,  message = FALSE}
+```{r Loading Packages/Reading in Data }
 # Loading needed packages for assignment and checking current working directory with getwd()
 library(tidyverse)
 library(lubridate)
@@ -78,19 +78,19 @@ dim(Neonics)
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest? [Tip: The `sort()` command is useful for listing the values in order of magnitude...]
 
-```{r}
+```{r Summary of Data}
 # Sorting the summary of the effects column 
 sort(summary(Neonics$Effect))
-
+view(Neonics)
 
 ```
 
-> Answer: The most commons effects are population and mortality. ??? Finish this question!!
+> Answer: The most commons effects are population and mortality. I think that these effects are specifically of interest because the scientists are interested in how individual and groups of insects are impacted by these neoninotinoids. The population effect of the neoninotinoids is measured typically through abundance of insects, while the mortality looks at the mortality metric. The abundance and mortality are insightful determining the impact of neoninotinoids. 
 
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: Explore the help on the `summary()` function, in particular the `maxsum` argument...]
 
-```{r}
+```{r Summary of Data pt. 2 }
 #sorting the summary of the species.common.name column 
 sort(summary(Neonics$Species.Common.Name))
 
@@ -101,19 +101,19 @@ sort(summary(Neonics$Species.Common.Name))
 
 8.  Concentrations are always a numeric value. What is the class of `Conc.1..Author.` column in the dataset, and why is it not numeric? [Tip: Viewing the dataframe may be helpful...]
 
-```{r}
+```{r Class Check}
 # checking the class of the Conc.1..Author column 
 class(Neonics$Conc.1..Author.)
 
 ```
 
-> Answer: The class is a Factor. (FINISH THIS ONE)
+> Answer: The class is a Factor. The Conc.1..Author column is not numeric because the values are meant to be represented as categorical data, not integers. No math should ever be done on the column of concentrations because they are experiment specific and not measured values. 
 
 ## Explore your data graphically (Neonics)
 
 9.  Using `geom_freqpoly`, generate a plot of the number of studies conducted by publication year.
 
-```{r}
+```{r Plotting pt. 1}
 # creating a frequency plot for the count of studies published in each year 
 ggplot(Neonics, aes(x = Publication.Year)) +
   geom_freqpoly()
@@ -122,7 +122,7 @@ ggplot(Neonics, aes(x = Publication.Year)) +
 
 10. Reproduce the same graph but now add a color aesthetic so that different Test.Location are displayed as different colors.
 
-```{r}
+```{r Plotting pt. 2}
 # separating counts by test location 
 ggplot(Neonics, aes(x = Publication.Year, color = Test.Location)) +
   geom_freqpoly()
@@ -137,7 +137,7 @@ Interpret this graph. What are the most common test locations, and do they diffe
 
 [**TIP**: Add `theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))` to the end of your plot command to rotate and align the X-axis labels...]
 
-```{r}
+```{r Plotting pt. 3}
 # creation of a bar graph based on end points 
 ggplot(Neonics, aes(x = Endpoint)) + 
   geom_bar()
@@ -151,7 +151,7 @@ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 12. Determine the class of collectDate. Is it a date? If not, change to a date and confirm the new class of the variable. Using the `unique` function, determine which dates litter was sampled in August 2018.
 
-```{r}
+```{r Factor to Date}
  # Checking the class of collectDate Column
  class(Litter$collectDate)
 # changing collectDate from factor to date in ymd format
@@ -164,7 +164,7 @@ class(Litter$collectDate)
 
 13. Using the `unique` function, determine how many different plots were sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
-```{r}
+```{r Unique function }
 # unique() function used to determine how plots were sampled. Found how many unique plot ID codes there were.
 unique(Litter$plotID)
 
@@ -174,7 +174,7 @@ unique(Litter$plotID)
 
 14. Create a bar graph of functionalGroup counts. This shows you what type of litter is collected at the Niwot Ridge sites. Notice that litter types are fairly equally distributed across the Niwot Ridge sites.
 
-```{r}
+```{r Plotting pt. 4}
 # creating a bar plot showing the counts of each functionGroup category. 
 ggplot(Litter, aes(x = functionalGroup)) +
   geom_bar()
@@ -184,7 +184,7 @@ ggplot(Litter, aes(x = functionalGroup)) +
 
 15. Using `geom_boxplot` and `geom_violin`, create a boxplot and a violin plot of dryMass by functionalGroup.
 
-```{r}
+```{r Plotting pt. 5}
 # creating a box plot of dry mass in each functional group. 
 ggplot(Litter, aes(x = functionalGroup, y = dryMass)) +
   geom_boxplot()
@@ -196,7 +196,7 @@ ggplot(Litter, aes(x = functionalGroup, y = dryMass)) +
 
 Why is the boxplot a more effective visualization option than the violin plot in this case?
 
-> Answer: ANSWER THIS
+> Answer: In this case, the density of the data is not necessary for effectively visualizing the data. The violin plot shows the distribution of data but in this case, the distribution makes the graph almost impossible to read as the 'violins' are unreadable as they take up such a small area on the graph. The box plot effectively presents the summary statistics as well as showing outliers for each group. 
 
 What type(s) of litter tend to have the highest biomass at these sites?
 
