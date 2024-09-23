@@ -47,10 +47,10 @@ Litter <- read.csv(
   file = here("./Data/Raw/NEON_NIWO_Litter_massdata_2018_08_raw.csv"),
   stringsAsFactors = TRUE)  
 #view(Neonics)
-view(Litter)
+#view(Litter)
+```
 ## Learn about your system
-
-2.  The neonicotinoid dataset was collected from the Environmental Protection Agency's ECOTOX Knowledgebase, a database for ecotoxicology research. Neonicotinoids are a class of insecticides used widely in agriculture. The dataset that has been pulled includes all studies published on insects. Why might we be interested in the ecotoxicology of neonicotinoids on insects? Feel free to do a brief internet search if you feel you need more background information.
+2. The neonicotinoid dataset was collected from the Environmental Protection Agency's ECOTOX Knowledgebase, a database for ecotoxicology research. Neonicotinoids are a class of insecticides used widely in agriculture. The dataset that has been pulled includes all studies published on insects. Why might we be interested in the ecotoxicology of neonicotinoids on insects? Feel free to do a brief internet search if you feel you need more background information.
 
 > Answer: The ecotoxicology of neoninotinoids is important to understand their impact on different species of insects in order to know if they would be useful to implement to combat certain species. Additionally, it is important to understand thier toxicology in order to mitigate the risk of eliminating important and non harmful insect species. 
 
