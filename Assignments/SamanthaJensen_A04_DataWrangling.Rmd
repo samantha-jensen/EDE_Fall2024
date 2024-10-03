@@ -167,7 +167,7 @@ dim(combined1)
 EPA.air.spread <- pivot_wider(combined1, names_from = AQS_PARAMETER_DESC, 
                               values_from = mean_AQI)
 # Reclassing Ozone column to be numeric 
-as.numeric(EPA.air.spread$Ozone)
+##as.numeric(EPA.air.spread$Ozone)
 
 
 #10 Dimension Check 
