@@ -1,0 +1,162 @@
+---
+title: "Assignment 5: Data Visualization"
+author: Samantha Jensen
+date: "Fall 2024"
+output: pdf_document
+geometry: margin=2.54cm
+fig_height: 3
+fig_width: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+## OVERVIEW
+
+This exercise accompanies the lessons in Environmental Data Analytics on Data Visualization 
+
+## Directions
+1. Rename this file `<FirstLast>_A05_DataVisualization.Rmd` (replacing `<FirstLast>` with your first and last name).
+2. Change "Student Name" on line 3 (above) with your name.
+3. Work through the steps, **creating code and output** that fulfill each instruction.
+4. Be sure your code is tidy; use line breaks to ensure your code fits in the knitted output.
+5. Be sure to **answer the questions** in this assignment document.
+6. When you have completed the assignment, **Knit** the text and code into a single PDF file.
+
+---
+
+## Set up your session 
+
+1. Set up your session. Load the tidyverse, lubridate, here & cowplot packages, and verify your home directory. Read in the NTL-LTER processed data files for nutrients and chemistry/physics for Peter and Paul Lakes (use the tidy `NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv` version in the Processed_KEY folder) and the processed data file for the Niwot Ridge litter dataset (use the `NEON_NIWO_Litter_mass_trap_Processed.csv` version, again from the Processed_KEY folder). 
+
+2. Make sure R is reading dates as date format; if not change the format to date.
+
+```{r initialize project}
+#1 
+# Loading in libraries 
+library(tidyverse)
+library(lubridate)
+library(here)
+library(cowplot)
+#checking working directory 
+here()
+PeterPaul.chem.nutrients <- 
+  read.csv(here(
+"Data/Processed_KEY/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv"),
+           stringsAsFactors = T)
+Neon_litter <- read.csv(here(
+  "Data/Processed_KEY/NEON_NIWO_Litter_mass_trap_Processed.csv"), 
+                        stringsAsFactors = T)
+#2 
+# changing factors to dates 
+Neon_litter$collectDate <- ymd(Neon_litter$collectDate)
+PeterPaul.chem.nutrients$sampledate <- ymd(PeterPaul.chem.nutrients$sampledate)
+```
+## Define your theme
+3. Build a theme and set it as your default theme. Customize the look of at least two of the following: 
+ * Plot background
+ * Plot title
+ * Axis labels
+ * Axis ticks/gridlines
+ * Legend
+
+```{r build plot theme}
+#3
+# building a theme 
+default_theme <- theme(
+  legend.position = "Right", 
+  axis.text = element_text(color = "blue"), 
+)
+```
+
+## Create graphs
+For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best practices for data visualization. Ensure your theme, color palettes, axes, and additional aesthetics are edited accordingly.
+
+4. [NTL-LTER] Plot total phosphorus (`tp_ug`) by phosphate (`po4`), with separate aesthetics for Peter and Paul lakes. Add line(s) of best fit using the `lm` method. Adjust your axes to hide extreme values (hint: change the limits using `xlim()` and/or `ylim()`).
+
+```{r plot total P vs PO4}
+#4 
+# plotting total phosphorous by phosphate, comparing by Paul and Peter Lake 
+plot_4 <- PeterPaul.chem.nutrients %>% 
+  ggplot(aes(x = po4, y= tp_ug)) + 
+  geom_point() + 
+  default_theme +
+  xlim(0,50) +
+  facet_wrap(facets = vars(lakename), nrow = 2) + 
+  geom_smooth(method = lm, se=FALSE) 
+plot_4
+  
+```
+
+
+5. [NTL-LTER] Make three separate boxplots of (a) temperature, (b) TP, and (c) TN, with month as the x axis and lake as a color aesthetic. Then, create a cowplot that combines the three graphs. Make sure that only one legend is present and that graph axes are aligned. 
+
+Tips:
+* Recall the discussion on factors in the lab section as it may be helpful here. 
+* Setting an axis title in your theme to `element_blank()` removes the axis title (useful when multiple, aligned plots use the same axis values)
+* Setting a legend's position to "none" will remove the legend from a plot.
+* Individual plots can have different sizes when combined using `cowplot`.
+
+```{r Create boxplots}
+#5 
+# creating a plot of temperature vs. month
+boxplot_temp <- PeterPaul.chem.nutrients %>% 
+  ggplot(aes(x = month, y = temperature_C, color = lakename)) + 
+  geom_boxplot()  +
+  default_theme
+  boxplot_temp
+# ploting TP by month   
+boxplot_TP <- PeterPaul.chem.nutrients %>% 
+  ggplot(aes(x=month, y = tp_ug, color = lakename)) +
+  geom_boxplot() +
+  theme(legend.position = "none") +
+  default_theme
+boxplot_TP
+# plotting TN by month 
+boxplot_TN <- PeterPaul.chem.nutrients %>% 
+  ggplot(aes(x=month, y=tn_ug, color = lakename)) +
+  geom_boxplot() +
+  theme(legend.position = "none")
+  default_theme
+boxplot_TN  
+
+# combining all 3 graphs 
+plot_grid(boxplot_TN, boxplot_temp, boxplot_TP, nrow = 3)
+
+
+```
+
+Question: What do you observe about the variables of interest over seasons and between lakes? 
+
+> Answer: The temperatures are very similar between lakes, but are slightly warmer in Paul Lake. The TN and TP values are higher in Peter Lake than in Paul Lake. 
+
+6. [Niwot Ridge] Plot a subset of the litter dataset by displaying only the "Needles" functional group. Plot the dry mass of needle litter by date and separate by NLCD class with a color aesthetic. (no need to adjust the name of each land use)
+
+7. [Niwot Ridge] Now, plot the same plot but with NLCD classes separated into three facets rather than separated by color. 
+
+```{r Plot litter}
+#6 ** Add Title**
+# filtering out only the rows with "Needles"
+litter_plot_filter <- Neon_litter %>% 
+  filter(functionalGroup == "Needles")
+# Plotting dry mass by collection date
+plot_litter <- litter_plot_filter %>% 
+  ggplot(aes(x = collectDate, y = dryMass, color = nlcdClass)) +
+ geom_point() + 
+  default_theme
+plot_litter
+
+#7 
+# plotting Dry Mass by collection date and separated by nlcd Class
+plot_litter_2 <- litter_plot_filter %>% 
+  ggplot(aes(x = collectDate, y = dryMass)) + 
+  geom_point() + 
+  facet_wrap(facets = vars(nlcdClass), nrow = 3) +
+             xlab("Collection Date") +
+             ylab ("Dry Mass") + 
+  default_theme
+plot_litter_2
+
+```
+Question: Which of these plots (6 vs. 7) do you think is more effective, and why? 
+
+> Answer: I think that plot 6 is more effective because the differences in dry mass values between nlcd classes are easier to visualize. In figure 7, the classes are harder to compare by collection date when they are in seperate figures. 
