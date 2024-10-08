@@ -102,9 +102,10 @@ Tips:
 boxplot_temp <- PeterPaul.chem.nutrients %>% 
   ggplot(aes(x = month, y = temperature_C, color = lakename)) + 
   geom_boxplot()  +
-  default_theme
+  theme(legend.position = "right")
+  default_theme 
   boxplot_temp
-# ploting TP by month   
+# plotting TP by month   
 boxplot_TP <- PeterPaul.chem.nutrients %>% 
   ggplot(aes(x=month, y = tp_ug, color = lakename)) +
   geom_boxplot() +
@@ -134,7 +135,7 @@ Question: What do you observe about the variables of interest over seasons and b
 7. [Niwot Ridge] Now, plot the same plot but with NLCD classes separated into three facets rather than separated by color. 
 
 ```{r Plot litter}
-#6 ** Add Title**
+#6 
 # filtering out only the rows with "Needles"
 litter_plot_filter <- Neon_litter %>% 
   filter(functionalGroup == "Needles")
@@ -142,6 +143,7 @@ litter_plot_filter <- Neon_litter %>%
 plot_litter <- litter_plot_filter %>% 
   ggplot(aes(x = collectDate, y = dryMass, color = nlcdClass)) +
  geom_point() + 
+  ggtitle("Dry Mass of Needle Litter by Collection Date") +
   default_theme
 plot_litter
 
