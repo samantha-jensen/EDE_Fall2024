@@ -66,6 +66,7 @@ default_theme <- theme(
   legend.position = "Right", 
   axis.text = element_text(color = "blue"), 
 )
+theme_set(default_theme)
 ```
 
 ## Create graphs
@@ -79,7 +80,6 @@ For numbers 4-7, create ggplot graphs and adjust aesthetics to follow best pract
 plot_4 <- PeterPaul.chem.nutrients %>% 
   ggplot(aes(x = po4, y= tp_ug)) + 
   geom_point() + 
-  default_theme +
   xlim(0,50) +
   facet_wrap(facets = vars(lakename), nrow = 2) + 
   geom_smooth(method = lm, se=FALSE) 
@@ -98,26 +98,26 @@ Tips:
 
 ```{r Create boxplots}
 #5 
+PeterPaul.chem.nutrients$month <-  factor(PeterPaul.chem.nutrients$month,
+                                          level = 1:12, 
+                                          labels = month.abb)
 # creating a plot of temperature vs. month
 boxplot_temp <- PeterPaul.chem.nutrients %>% 
   ggplot(aes(x = month, y = temperature_C, color = lakename)) + 
   geom_boxplot()  +
-  theme(legend.position = "right")
-  default_theme 
+  theme(legend.position = "right") 
   boxplot_temp
 # plotting TP by month   
 boxplot_TP <- PeterPaul.chem.nutrients %>% 
   ggplot(aes(x=month, y = tp_ug, color = lakename)) +
   geom_boxplot() +
-  theme(legend.position = "none") +
-  default_theme
+  theme(legend.position = "none") 
 boxplot_TP
 # plotting TN by month 
 boxplot_TN <- PeterPaul.chem.nutrients %>% 
   ggplot(aes(x=month, y=tn_ug, color = lakename)) +
   geom_boxplot() +
   theme(legend.position = "none")
-  default_theme
 boxplot_TN  
 
 # combining all 3 graphs 
@@ -143,8 +143,7 @@ litter_plot_filter <- Neon_litter %>%
 plot_litter <- litter_plot_filter %>% 
   ggplot(aes(x = collectDate, y = dryMass, color = nlcdClass)) +
  geom_point() + 
-  ggtitle("Dry Mass of Needle Litter by Collection Date") +
-  default_theme
+  ggtitle("Dry Mass of Needle Litter by Collection Date") 
 plot_litter
 
 #7 
@@ -154,8 +153,7 @@ plot_litter_2 <- litter_plot_filter %>%
   geom_point() + 
   facet_wrap(facets = vars(nlcdClass), nrow = 3) +
              xlab("Collection Date") +
-             ylab ("Dry Mass") + 
-  default_theme
+             ylab ("Dry Mass") 
 plot_litter_2
 
 ```
