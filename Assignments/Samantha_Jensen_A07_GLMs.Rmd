@@ -104,7 +104,6 @@ summary(subset.reg)
 
 > Answer: This linear regression model shows that there is a linear relationship between depth and temperature and that changes in depth can explain changes in changes in temeprature. the R-squared value shows that 73.87% of the variability in temperature can be explained by changes in depth. 
 
-
 ---
 
 ## Multiple regression
@@ -131,8 +130,6 @@ summary(multi.reg)
 
 > Answer: The set of explanatory variables that the AIC method suggests were year4, daynum and depth. 74.11% of the observed variance is explained by this model. This is not an improvement from only using depth as the explanatory variable. 
 
-
-
 ---
 ## Analysis of Variance
 
@@ -151,7 +148,7 @@ summary(NTL.lm)
 
 13. Is there a significant difference in mean temperature among the lakes? Report your findings. 
 
-> Answer: ANSWER THIS
+> Answer: Since the p value is less than 0.05, we can reject the null hypothesis that the mean temperatures are the same. Therefore, there is evidence that the mean tempterature has significant differences between lakes. 
 
 
 
@@ -186,7 +183,7 @@ Lakename.groups
 
 17. If we were just looking at Peter Lake and Paul Lake. What's another test we might explore to see whether they have distinct mean temperatures? 
 
->Answer: ANSWER THIS 
+>Answer: A T-Test can be used to compare the mean temperatures of Peter Lake and Paul Lake. 
 
 
 
